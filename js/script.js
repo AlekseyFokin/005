@@ -47,7 +47,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const modal=document.querySelector('.modal');
     const modalCloseBtn=document.querySelectorAll('[data-close]');
 
-    
+    modalTrigger.forEach(btn=>(btn.addEventListener('click',(e)=>{
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+    })));
+
 
 });
 
