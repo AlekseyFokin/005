@@ -41,5 +41,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
        }
     });
 
+    //modal
+
+    const modalTrigger=document.querySelectorAll('[data-modal]');
+    const modal=document.querySelector('.modal');
+    const modalCloseBtn=document.querySelectorAll('[data-close]');
+
+    
+
 });
 
