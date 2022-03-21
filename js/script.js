@@ -45,13 +45,56 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     const modalTrigger=document.querySelectorAll('[data-modal]');
     const modal=document.querySelector('.modal');
-    const modalCloseBtn=document.querySelectorAll('[data-close]');
+    const modalCloseBtn=document.querySelector('[data-close]');
 
-    modalTrigger.forEach(btn=>(btn.addEventListener('click',(e)=>{
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-    })));
+    function openModal(){
+                modal.classList.add('show');
+                modal.classList.remove('hide');
+            //или
+            // modal.classList.toggle('show');
+                document.body.style.overflow='hidden'; 
+                clearInterval(openModalTime);
+    }
 
+    modalTrigger.forEach(btn=>(btn.addEventListener('click',openModal)));
+
+    function closeModal(){
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+      //или
+      //modal.classList.toggle('show');
+        document.body.style.overflow='';
+    }
+
+    modalCloseBtn.addEventListener('click',closeModal);
+
+ // клик по основному окну - закрытие диалога
+ modal.addEventListener('click',(e)=>{
+    if (e.target===modal){closeModal();}
+ });
+
+ //нажатие кнопки esc - закрытие диалогокна
+ document.addEventListener('keydown',(e)=>{
+     if ((e.code==='Escape')&&(modal.classList.contains('show'))) {closeModal();}
+ });
+
+ // открытие модального окна по времени
+
+ let openModalTime=setTimeout(openModal,6000);
+
+ //открывать окно диалога, если пользователь долистал до конца страницы
+
+ function showModabyScroll(){
+    if (window.pageYOffset+ //прокрученная часть окна
+    document.documentElement.clientHeight  >= // это открытая часть страницы - на экране. их сумма должна быть ровна или больше длины всего сайта
+    document.documentElement.scrollHeight  //-1 глюк некоторых браузеров
+   )
+   { openModal(); 
+     window.removeEventListener('scroll',  showModabyScroll);
+   }
+ }
+
+ window.addEventListener('scroll',  showModabyScroll);
 
 });
 
